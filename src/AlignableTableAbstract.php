@@ -121,6 +121,8 @@ abstract class AlignableTableAbstract extends TableAbstract implements TableInte
         foreach ($sampleRecord as $field => $value) {
             if (is_numeric($value)) {
                 $this->alignRight[] = $field;
+            } elseif (is_string($value) && preg_match('/^\d+%$/', $value)) {
+                $this->alignRight[] = $field;
             } else {
                 $this->alignLeft[] = $field;
             }
