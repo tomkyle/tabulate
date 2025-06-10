@@ -47,7 +47,7 @@ abstract class AlignableTableAbstract extends TableAbstract implements TableInte
      * This method allows you to specify one or more fields that should be aligned to the right in the table.
      * If a field is already aligned to the right, it will not be added again.
      *
-     * @param array|string $fields The field name(s) to align to the right. Can be a single field or an array of fields.
+     * @param array<int|string>|string $fields The field name(s) to align to the right. Can be a single field or an array of fields.
      * @return self Fluid interface
      */
     public function alignRight(array|string $fields): self
@@ -57,9 +57,11 @@ abstract class AlignableTableAbstract extends TableAbstract implements TableInte
             if (!in_array($field, $this->alignRight)) {
                 $this->alignRight[] = $field;
             }
+
             // Remove from left alignment if it was set
             $this->alignLeft = array_values(array_filter($this->alignLeft, fn($f) => $f !== $field));
         }
+
         return $this;
     }
 
@@ -70,7 +72,7 @@ abstract class AlignableTableAbstract extends TableAbstract implements TableInte
      * This method allows you to specify one or more fields that should be aligned to the left in the table.
      * If a field is already aligned to the left, it will not be added again.
      *
-     * @param array|string $fields The field name(s) to align to the left. Can be a single field or an array of fields.
+     * @param array<int|string>|string $fields The field name(s) to align to the left. Can be a single field or an array of fields.
      * @return self Fluid interface
      */
     public function alignLeft(array|string $fields): self
@@ -80,9 +82,11 @@ abstract class AlignableTableAbstract extends TableAbstract implements TableInte
             if (!in_array($field, $this->alignLeft)) {
                 $this->alignLeft[] = $field;
             }
+
             // Remove from right alignment if it was set
             $this->alignRight = array_values(array_filter($this->alignRight, fn($f) => $f !== $field));
         }
+
         return $this;
     }
 

@@ -11,7 +11,7 @@ namespace tomkyle\Tabulate;
 trait StreamAwareTrait
 {
     /**
-     * @var mixed $stream The stream resource associated with this formatter.
+     * @var resource $stream The stream resource associated with this formatter.
      */
     private $stream;
 

@@ -24,10 +24,17 @@ abstract class TableAbstract implements TableInterface
      *
      * @param array<string,mixed> $rows An array of associative arrays representing the rows of the table.
      * @return array<int,string|int> An array of headers.
+     * @throws \UnexpectedValueException If any row is not an array.
      */
     public function extractHeaders(array $rows): array
     {
-        $collectedKeys = array_map('array_keys', $rows);
+        $collectedKeys = array_map(static function ($row) {
+            if (!is_array($row)) {
+                throw new \UnexpectedValueException('Each row must be an array, ' . gettype($row) . ' given.');
+            }
+
+            return array_keys($row);
+        }, $rows);
         return array_values(array_unique(array_merge(...$collectedKeys)));
     }
 }

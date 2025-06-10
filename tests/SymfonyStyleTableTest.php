@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file is part of tomkyle/tabulate
+ *
+ * Format 2D arrays as CLI console table, Markdown, CSV, YAML, JSON.
+ */
+
 declare(strict_types=1);
 
 namespace tests;
@@ -79,8 +85,8 @@ class SymfonyStyleTableTest extends TestCase
                 'expectedAlignments' => [
                     'Age' => true,
                     'Score' => true,
-                    'Name' => false
-                ]
+                    'Name' => false,
+                ],
             ],
             'alignLeft with array overriding default right' => [
                 'method' => 'alignLeft',
@@ -89,8 +95,8 @@ class SymfonyStyleTableTest extends TestCase
                 'expectedAlignments' => [
                     'Name' => false,
                     'Age' => true,
-                    'Score' => true
-                ]
+                    'Score' => true,
+                ],
             ],
             'alignRight with single field' => [
                 'method' => 'alignRight',
@@ -98,9 +104,9 @@ class SymfonyStyleTableTest extends TestCase
                 'defaultAlign' => 'left',
                 'expectedAlignments' => [
                     'Price' => true,
-                    'Product' => false
-                ]
-            ]
+                    'Product' => false,
+                ],
+            ],
         ];
     }
 
@@ -115,7 +121,7 @@ class SymfonyStyleTableTest extends TestCase
             $this->assertSame(
                 $expectedRightAligned,
                 $table->isRightAligned($field),
-                "Field '$field' alignment does not match expected value"
+                sprintf("Field '%s' alignment does not match expected value", $field),
             );
         }
 
@@ -191,13 +197,13 @@ class SymfonyStyleTableTest extends TestCase
             'default left alignment' => [
                 'defaultAlign' => 'left',
                 'fieldsToTest' => ['Name', 'Age'],
-                'expectedRightAligned' => [false, false]
+                'expectedRightAligned' => [false, false],
             ],
             'default right alignment' => [
                 'defaultAlign' => 'right',
                 'fieldsToTest' => ['Name', 'Age'],
-                'expectedRightAligned' => [true, true]
-            ]
+                'expectedRightAligned' => [true, true],
+            ],
         ];
     }
 
@@ -220,8 +226,8 @@ class SymfonyStyleTableTest extends TestCase
                 'tests' => [
                     'Price' => true,
                     'Name' => false,
-                    'UnknownField' => false
-                ]
+                    'UnknownField' => false,
+                ],
             ],
             'multiple right alignments' => [
                 'rightFields' => ['Age', 'Score'],
@@ -229,9 +235,9 @@ class SymfonyStyleTableTest extends TestCase
                 'tests' => [
                     'Age' => true,
                     'Score' => true,
-                    'Name' => false
-                ]
-            ]
+                    'Name' => false,
+                ],
+            ],
         ];
     }
 
@@ -241,10 +247,11 @@ class SymfonyStyleTableTest extends TestCase
         [$table] = $this->createSymfonyStyleTable(true, 'left', false);
 
         // Set specific alignments
-        if (!empty($rightFields)) {
+        if ($rightFields !== []) {
             $table->alignRight($rightFields);
         }
-        if (!empty($leftFields)) {
+
+        if ($leftFields !== []) {
             $table->alignLeft($leftFields);
         }
 

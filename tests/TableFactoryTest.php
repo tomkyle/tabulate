@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file is part of tomkyle/tabulate
+ *
+ * Format 2D arrays as CLI console table, Markdown, CSV, YAML, JSON.
+ */
+
 declare(strict_types=1);
 
 namespace tests;
@@ -46,7 +52,7 @@ class TableFactoryTest extends TestCase
     public function testCertainClassesImplementStreamAwareInterface(string $className): void
     {
         $this->assertTrue(
-            (new \ReflectionClass($className))->implementsInterface(StreamAwareInterface::class)
+            (new \ReflectionClass($className))->implementsInterface(StreamAwareInterface::class),
         );
     }
 
@@ -62,7 +68,7 @@ class TableFactoryTest extends TestCase
     public function testCertainClassesAreInstanceOfAlignableTableAbstract(string $className): void
     {
         $this->assertTrue(
-            (new \ReflectionClass($className))->isSubclassOf(AlignableTableAbstract::class)
+            (new \ReflectionClass($className))->isSubclassOf(AlignableTableAbstract::class),
         );
     }
 

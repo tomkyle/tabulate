@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file is part of tomkyle/tabulate
+ *
+ * Format 2D arrays as CLI console table, Markdown, CSV, YAML, JSON.
+ */
+
 declare(strict_types=1);
 
 namespace tests;

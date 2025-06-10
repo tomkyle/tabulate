@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file is part of tomkyle/tabulate
+ *
+ * Format 2D arrays as CLI console table, Markdown, CSV, YAML, JSON.
+ */
+
 declare(strict_types=1);
 
 namespace tests;
@@ -23,9 +29,9 @@ class CsvTableTest extends TestCase
         rewind($stream);
         $output = stream_get_contents($stream);
 
-        $expected = 'foo' . "\t" . 'baz' . PHP_EOL;
-        $expected .= 'bar' . "\t" . '123' . PHP_EOL;
-        $expected .= 'quux' . "\t" . '456' . PHP_EOL;
+        $expected = 'foo	baz' . PHP_EOL;
+        $expected .= 'bar	123' . PHP_EOL;
+        $expected .= 'quux	456' . PHP_EOL;
 
         $this->assertSame($expected, $output);
     }
@@ -43,7 +49,7 @@ class CsvTableTest extends TestCase
         rewind($stream);
         $output = stream_get_contents($stream);
 
-        $expected = 'b' . "\t" . 'd' . PHP_EOL;
+        $expected = 'b	d' . PHP_EOL;
 
         $this->assertSame($expected, $output);
     }

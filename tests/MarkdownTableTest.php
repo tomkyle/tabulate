@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file is part of tomkyle/tabulate
+ *
+ * Format 2D arrays as CLI console table, Markdown, CSV, YAML, JSON.
+ */
+
 declare(strict_types=1);
 
 namespace tests;
@@ -61,9 +67,9 @@ class MarkdownTableTest extends TestCase
                 'expectedAlignments' => [
                     'Age' => true,
                     'Score' => true,
-                    'Name' => false
+                    'Name' => false,
                 ],
-                'expectedSeparator' => '| ---- | ---: | ---: |'
+                'expectedSeparator' => '| ---- | ---: | ---: |',
             ],
             'alignLeft with array overriding default right' => [
                 'method' => 'alignLeft',
@@ -72,9 +78,9 @@ class MarkdownTableTest extends TestCase
                 'expectedAlignments' => [
                     'Name' => false,
                     'Age' => true,
-                    'Score' => true
+                    'Score' => true,
                 ],
-                'expectedSeparator' => '| ---- | ---: | ---: |'
+                'expectedSeparator' => '| ---- | ---: | ---: |',
             ],
             'alignRight with single field' => [
                 'method' => 'alignRight',
@@ -82,17 +88,17 @@ class MarkdownTableTest extends TestCase
                 'defaultAlign' => 'left',
                 'expectedAlignments' => [
                     'Price' => true,
-                    'Product' => false
+                    'Product' => false,
                 ],
-                'expectedSeparator' => '| ---- | ---: |'
-            ]
+                'expectedSeparator' => '| ---- | ---: |',
+            ],
         ];
     }
 
     #[DataProvider('alignmentTestProvider')]
     public function testAlignmentMethods(string $method, array|string $fields, string $defaultAlign, array $expectedAlignments, string $expectedSeparator): void
     {
-        $rows = match($method . '_' . (is_array($fields) ? 'array' : 'string')) {
+        $rows = match ($method . '_' . (is_array($fields) ? 'array' : 'string')) {
             'alignRight_array', 'alignLeft_array' => [
                 ['Name' => 'Alice', 'Age' => 30, 'Score' => 95.5],
                 ['Name' => 'Bob', 'Age' => 25, 'Score' => 87.2],
@@ -100,7 +106,7 @@ class MarkdownTableTest extends TestCase
             default => [
                 ['Product' => 'Laptop', 'Price' => 999.99],
                 ['Product' => 'Mouse', 'Price' => 29.99],
-            ]
+            ],
         };
 
         $stream = fopen('php://memory', 'r+');
@@ -112,7 +118,7 @@ class MarkdownTableTest extends TestCase
             $this->assertSame(
                 $expectedRightAligned,
                 $markdownTable->isRightAligned($field),
-                "Field '$field' alignment does not match expected value"
+                sprintf("Field '%s' alignment does not match expected value", $field),
             );
         }
 
@@ -223,13 +229,13 @@ class MarkdownTableTest extends TestCase
             'default left alignment' => [
                 'defaultAlign' => 'left',
                 'fieldsToTest' => ['Name', 'Age'],
-                'expectedRightAligned' => [false, false]
+                'expectedRightAligned' => [false, false],
             ],
             'default right alignment' => [
                 'defaultAlign' => 'right',
                 'fieldsToTest' => ['Name', 'Age'],
-                'expectedRightAligned' => [true, true]
-            ]
+                'expectedRightAligned' => [true, true],
+            ],
         ];
     }
 
@@ -253,8 +259,8 @@ class MarkdownTableTest extends TestCase
                 'tests' => [
                     'Price' => true,
                     'Name' => false,
-                    'UnknownField' => false
-                ]
+                    'UnknownField' => false,
+                ],
             ],
             'multiple right alignments' => [
                 'rightFields' => ['Age', 'Score'],
@@ -262,9 +268,9 @@ class MarkdownTableTest extends TestCase
                 'tests' => [
                     'Age' => true,
                     'Score' => true,
-                    'Name' => false
-                ]
-            ]
+                    'Name' => false,
+                ],
+            ],
         ];
     }
 
@@ -275,10 +281,11 @@ class MarkdownTableTest extends TestCase
         $markdownTable = new MarkdownTable(true, 'left', false, $stream);
 
         // Set specific alignments
-        if (!empty($rightFields)) {
+        if ($rightFields !== []) {
             $markdownTable->alignRight($rightFields);
         }
-        if (!empty($leftFields)) {
+
+        if ($leftFields !== []) {
             $markdownTable->alignLeft($leftFields);
         }
 
