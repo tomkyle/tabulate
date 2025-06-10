@@ -14,7 +14,7 @@ class JsonTable extends TableAbstract implements TableInterface, StreamAwareInte
 
     /**
      * @param int $jsonOptions JSON encoding options. Defaults to JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR.
-     * @param resource $stream The stream to write to. Defaults to STDOUT.
+     * @param resource|string $stream The stream to write to. Defaults to STDOUT.
      */
     public function __construct(protected int $jsonOptions = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR, $stream = STDOUT)
     {

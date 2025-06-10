@@ -13,11 +13,11 @@ class CsvTable extends TableAbstract implements TableInterface, StreamAwareInter
     use StreamAwareTrait;
 
     /**
-     * @param string                 $separator   Optional: CSV separator. Defaults to tab.
-     * @param string                 $enclosure   Optional: CSV enclosure character. Defaults to double quote.
-     * @param string                 $escape      Optional: CSV escape character. Defaults to backslash.
-     * @param bool                   $withHeaders Optional: Whether to include headers. Defaults to true.
-     * @param resource               $stream      The stream to write to. Defaults to STDOUT.
+     * @param string          $separator   Optional: CSV separator. Defaults to tab.
+     * @param string          $enclosure   Optional: CSV enclosure character. Defaults to double quote.
+     * @param string          $escape      Optional: CSV escape character. Defaults to backslash.
+     * @param bool            $withHeaders Optional: Whether to include headers. Defaults to true.
+     * @param resource|string $stream      The stream to write to. Defaults to STDOUT.
      */
     public function __construct(public string $separator = "\t", public string $enclosure = '"', public string $escape = '\\', protected bool $withHeaders = true, $stream = STDOUT)
     {

@@ -53,4 +53,49 @@ class JsonTableTest extends TestCase
 
         $this->assertSame($expected, $output);
     }
+
+    public function testWriteToFile(): void
+    {
+        $rows = [
+            ['Name' => 'Alice', 'Age' => 30],
+            ['Name' => 'Bob', 'Age' => 25],
+        ];
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'json_test_');
+        $this->assertNotFalse($tempFile);
+
+        $jsonTable = new JsonTable(stream: $tempFile);
+        $jsonTable($rows);
+
+        $this->assertFileExists($tempFile);
+        $content = file_get_contents($tempFile);
+        $this->assertIsString($content);
+
+        $decoded = json_decode($content, true);
+        $this->assertSame($rows, $decoded);
+
+        unlink($tempFile);
+    }
+
+    public function testWriteToFileWithCustomOptions(): void
+    {
+        $rows = [
+            ['Product' => 'Laptop', 'Price' => 999.99],
+        ];
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'json_test_compact_');
+        $this->assertNotFalse($tempFile);
+
+        $jsonTable = new JsonTable(jsonOptions: JSON_UNESCAPED_SLASHES, stream: $tempFile);
+        $jsonTable($rows);
+
+        $this->assertFileExists($tempFile);
+        $content = file_get_contents($tempFile);
+        $this->assertIsString($content);
+
+        // Should be compact (no pretty print)
+        $this->assertStringNotContainsString('    ', $content);
+
+        unlink($tempFile);
+    }
 }

@@ -318,4 +318,79 @@ class MarkdownTableTest extends TestCase
         $result = $markdownTable->alignRight('Age')->alignLeft('Name');
         $this->assertSame($markdownTable, $result);
     }
+
+    public function testWriteToFile(): void
+    {
+        $rows = [
+            ['Name' => 'Alice', 'Age' => 30],
+            ['Name' => 'Bob', 'Age' => 25],
+        ];
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'markdown_test_');
+        $this->assertNotFalse($tempFile);
+
+        $markdownTable = new MarkdownTable(stream: $tempFile);
+        $markdownTable($rows);
+
+        $this->assertFileExists($tempFile);
+        $content = file_get_contents($tempFile);
+        $this->assertIsString($content);
+
+        // Check Markdown table structure
+        $this->assertStringContainsString('| Name | Age |', $content);
+        $this->assertStringContainsString('| ---- | ---: |', $content);
+        $this->assertStringContainsString('| Alice | 30 |', $content);
+        $this->assertStringContainsString('| Bob | 25 |', $content);
+
+        unlink($tempFile);
+    }
+
+    public function testWriteToFileWithoutHeaders(): void
+    {
+        $rows = [
+            ['Product' => 'Laptop', 'Price' => 999.99],
+        ];
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'markdown_test_noheaders_');
+        $this->assertNotFalse($tempFile);
+
+        $markdownTable = new MarkdownTable(withHeaders: false, stream: $tempFile);
+        $markdownTable($rows);
+
+        $this->assertFileExists($tempFile);
+        $content = file_get_contents($tempFile);
+        $this->assertIsString($content);
+
+        // Should not contain headers or separator
+        $this->assertStringNotContainsString('Product', $content);
+        $this->assertStringNotContainsString('----', $content);
+        // But should contain data
+        $this->assertStringContainsString('Laptop', $content);
+        $this->assertStringContainsString('999.99', $content);
+
+        unlink($tempFile);
+    }
+
+    public function testWriteToFileWithAlignment(): void
+    {
+        $rows = [
+            ['Text' => 'Hello', 'Number' => 123],
+        ];
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'markdown_test_align_');
+        $this->assertNotFalse($tempFile);
+
+        $markdownTable = new MarkdownTable(autoAlign: false, stream: $tempFile);
+        $markdownTable->alignLeft('Text')->alignRight('Number');
+        $markdownTable($rows);
+
+        $this->assertFileExists($tempFile);
+        $content = file_get_contents($tempFile);
+        $this->assertIsString($content);
+
+        // Check alignment in separator row
+        $this->assertStringContainsString('| ---- | ---: |', $content);
+
+        unlink($tempFile);
+    }
 }

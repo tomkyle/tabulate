@@ -17,7 +17,7 @@ class TableFactory implements StreamAwareInterface
      *
      * @param string $defaultAlign The default alignment for the table columns, 'left' or  'right'.
      *                              This is used when creating tables that support alignment.
-     * @param resource $stream The stream to write to. Defaults to STDOUT.
+     * @param resource|string $stream The stream to write to. Defaults to STDOUT.
      */
     public function __construct(private string $defaultAlign = 'left', $stream = STDOUT)
     {

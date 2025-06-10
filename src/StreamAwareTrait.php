@@ -19,7 +19,7 @@ trait StreamAwareTrait
     /**
      * Returns the stream resource associated with this formatter.
      *
-     * @return mixed The stream resource, or null if not set.
+     * @return resource The stream resource, or null if not set.
      */
     public function getStream(): mixed
     {
@@ -29,12 +29,16 @@ trait StreamAwareTrait
     /**
      * Sets the stream resource for this formatter.
      *
-     * @param mixed $stream The stream resource to set. Must be a valid resource.
+     * @param resource|string $stream The stream resource to set. Must be a valid resource.
      * @return self Returns the current instance for method chaining.
      * @throws \InvalidArgumentException If the provided stream is not a valid resource.
      */
     public function setStream($stream): self
     {
+        if (is_string($stream)) {
+            $stream = fopen($stream, 'w');
+        }
+
         if (!is_resource($stream)) {
             throw new \InvalidArgumentException('Invalid stream provided. Must be a valid resource.');
         }

@@ -16,7 +16,7 @@ class MarkdownTable extends AlignableTableAbstract implements TableInterface, St
      * @param bool $withHeaders Whether to include headers in the output. Defaults to true.
      * @param string $defaultAlign The default alignment for fields. Can be 'left' or 'right'. Defaults to 'left'.
      * @param bool $autoAlign Automatically determine field alignment based on sample record. Defaults to true.
-     * @param resource $stream The stream to write to. Defaults to STDOUT.
+     * @param resource|string $stream The stream to write to. Defaults to STDOUT.
      */
     public function __construct(protected bool $withHeaders = true, string $defaultAlign = 'left', private bool $autoAlign = true, $stream = STDOUT)
     {

@@ -101,6 +101,6 @@ class TableFactoryTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid stream provided. Must be a valid resource.');
-        new TableFactory(stream: 'not a stream');
+        new TableFactory(stream: ['silly array not a stream']);
     }
 }
