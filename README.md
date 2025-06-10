@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Packagist](https://img.shields.io/packagist/v/tomkyle/tabulate.svg?style=flat)](https://packagist.org/packages/tomkyle/tabulate)
 [![PHP version](https://img.shields.io/packagist/php-v/tomkyle/tabulate.svg)](https://packagist.org/packages/tomkyle/tabulate)
-[![Tests](https://github.com/tomkyle/tabulate/actions/workflows/tests.yml/badge.svg)](https://github.com/tomkyle/tabulate/actions/workflows/tests.yml)
+[![Tests](https://github.com/tomkyle/tabulate/actions/workflows/php.yml/badge.svg)](https://github.com/tomkyle/tabulate/actions/workflows/php.yml)
 
 
 A library for formatting two-dimensional associative arrays as tables in various output formats: CLI console, Markdown, CSV, YAML, and JSON.
