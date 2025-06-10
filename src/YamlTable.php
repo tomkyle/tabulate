@@ -15,7 +15,7 @@ class YamlTable extends TableAbstract implements TableInterface, StreamAwareInte
     use StreamAwareTrait;
 
     /**
-     * @param int<0, 64721> $yamlOptions YAML dump options. Defaults to Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK.
+     * @param int $yamlOptions YAML dump options. Defaults to Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK.
      * @param resource $stream The stream to write to. Defaults to STDOUT.
      */
     public function __construct(protected int $yamlOptions = Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK, $stream = STDOUT)
@@ -27,7 +27,7 @@ class YamlTable extends TableAbstract implements TableInterface, StreamAwareInte
     /**
      * Sets the YAML options for dumping.
      *
-     * @param int<0, 64721> $yamlOptions YAML dump options.
+     * @param int $yamlOptions YAML dump options.
      */
     public function setOptions(int $yamlOptions): self
     {
